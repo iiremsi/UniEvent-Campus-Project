@@ -19,9 +19,13 @@ QA Lead & Integration Developer
 All team members contribute to development and project management activities.
 
 
-This is our excel sheet for the project
+This is our excel sheet for the project: 
 [UniEvent-Project-Plan.xlsx](https://github.com/user-attachments/files/25415136/UniEvent-Project-Plan.xlsx)
 
 ![UML Diagram](https://github.com/user-attachments/assets/8be46d71-e730-42b8-8723-de90fbf6755a)
+
+Our First Week Of Jira Planning : 
+<img width="1600" height="557" alt="image" src="https://github.com/user-attachments/assets/95133275-3445-4c18-adbe-b27d3c9d3659" />
+
 
 
