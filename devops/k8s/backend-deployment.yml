@@ -1,0 +1,119 @@
+# ═══════════════════════════════════════════════════════════════
+#  UniEvent Kubernetes — Backend Deployment + Service
+# ═══════════════════════════════════════════════════════════════
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: unievent-backend
+  namespace: unievent
+  labels:
+    app: unievent
+    component: backend
+spec:
+  replicas: 2                 # 2 replica — yüksek erişilebilirlik (HA)
+  selector:
+    matchLabels:
+      app: unievent
+      component: backend
+  # Rolling update stratejisi — sıfır kesinti ile güncelleme
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1             # Güncelleme sırasında en fazla 1 ekstra pod
+      maxUnavailable: 0       # Güncelleme sırasında hiç pod düşmez
+  template:
+    metadata:
+      labels:
+        app: unievent
+        component: backend
+    spec:
+      containers:
+        - name: unievent-backend
+          image: unievent-backend:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+          # ── Environment Variables ──
+          # ConfigMap'ten (hassas olmayan)
+          env:
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: unievent-config
+                  key: DB_HOST
+            - name: DB_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: unievent-config
+                  key: DB_PORT
+            - name: DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: unievent-config
+                  key: DB_NAME
+            # Secret'ten (hassas)
+            - name: DB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: unievent-secret
+                  key: DB_USERNAME
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: unievent-secret
+                  key: DB_PASSWORD
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: unievent-secret
+                  key: JWT_SECRET
+          # ── Probes ─────────────────
+          # Liveness: Pod çöktü mü? → Çöktüyse yeniden başlat
+          livenessProbe:
+            httpGet:
+              path: /api/auth/login
+              port: 8080
+            initialDelaySeconds: 60
+            periodSeconds: 30
+            timeoutSeconds: 5
+          # Readiness: Pod trafiğe hazır mı? → Hazır değilse Service'ten çıkar
+          readinessProbe:
+            httpGet:
+              path: /api/auth/login
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+          # ── Kaynak Limitleri ───────
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "250m"
+            limits:
+              memory: "1Gi"
+              cpu: "500m"
+
+---
+# ── Backend Service ──────────────────────────────────────────
+#  NodePort: Cluster dışından erişim sağlar.
+#  Tarayıcıdan http://<node-ip>:30080 ile API'ye ulaşılır.
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: unievent-backend-service
+  namespace: unievent
+  labels:
+    app: unievent
+    component: backend
+spec:
+  type: NodePort
+  selector:
+    app: unievent
+    component: backend
+  ports:
+    - port: 8080
+      targetPort: 8080
+      nodePort: 30080         # Dış dünyadan erişim portu
+      protocol: TCP

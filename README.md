@@ -1,31 +1,72 @@
-# UniEvent-Campus-Project
-UniEvent is a web-based campus event management platform that allows students to discover, register for, and interact with university events, while administrators can create and manage events with participant limits.
-This project is developed as part of the Software Project Management course and follows Agile (Scrum) methodology.
+# 🎓 UniEvent — Campus Event Sharing Platform
 
-#  Project Objectives
-Provide a centralized platform for campus events.
-Allow students to register and track event participation.
-Enable administrators to manage event creation and participant limits.
-Practice Agile project management using Jira.
-Apply SDLC principles in a real-world development scenario.
+UniEvent is a web-based campus event platform where students and clubs share events as short posts, discover upcoming activities, and stay connected with their university community.
 
+> Developed as part of the **Software Project Management** course using Agile (Scrum) methodology.
 
-# Team Roles
-Available in Excel and Jira platforms in detail.
-Project Manager & Backend Lead
-Frontend Lead & Requirements Analyst
-QA Lead & Integration Developer
+---
 
-All team members contribute to development and project management activities.
+## ✨ Features
 
+- 📝 **Post Events** — Share campus events in short, tweet-like posts (max 280 characters)
+- 📰 **Live Feed** — Browse all events in a paginated timeline
+- 🔐 **Secure Auth** — JWT-based registration and login
+- 👥 **User Roles** — Student, Club, and Admin roles
+- 📱 **API-First** — RESTful backend ready for any frontend
 
-This is our excel sheet for the project: 
-[UniEvent-Project-Plan.xlsx](https://github.com/user-attachments/files/25415136/UniEvent-Project-Plan.xlsx)
+---
+
+## 🚀 Quick Start
+
+```bash
+cd devops
+docker-compose up -d
+```
+- **API:** http://localhost:8080/api
+- **Swagger UI:** http://localhost:8080/swagger-ui.html
+
+---
+
+## 🗂️ Project Structure
+
+```
+├── backend/     → Spring Boot 3 REST API + Dockerfile
+├── frontend/    → React.js (separate team)
+├── devops/      → Docker Compose & Kubernetes manifests
+└── docs/        → Technical documentation
+```
+
+---
+
+## 📄 Documentation
+
+| Document | Description |
+|---|---|
+| [API Spec](docs/api-spec.md) | Endpoints, request/response examples |
+| [ER Diagram](docs/er-diagram.md) | Database schema & design decisions |
+| [Architecture](docs/architecture.md) | System design, K8s topology, rationale |
+
+---
+
+## 👥 Team
+
+| Role | Responsibility |
+|---|---|
+| Project Manager & Backend | Backend API, DevOps, database design |
+| Frontend  & Requirements Analyst | React UI, user stories |
+| QA & Integration Developer | Testing, CI/CD, integration |
+
+---
+
+## 📊 Project Management
+
+- **Methodology:** Agile (Scrum)
+- **Tracking:** [Jira Board](https://www.atlassian.com/software/jira)
+- **Project Plan:** [UniEvent-Project-Plan.xlsx](https://github.com/user-attachments/files/25415136/UniEvent-Project-Plan.xlsx)
 
 ![UML Diagram](https://github.com/user-attachments/assets/8be46d71-e730-42b8-8723-de90fbf6755a)
 
-Our First Week Of Jira Planning : 
-<img width="1600" height="557" alt="image" src="https://github.com/user-attachments/assets/95133275-3445-4c18-adbe-b27d3c9d3659" />
-
-
-
+<details>
+<summary>📸 Jira Sprint Planning</summary>
+<img width="1600" height="557" alt="Jira Planning" src="https://github.com/user-attachments/assets/95133275-3445-4c18-adbe-b27d3c9d3659" />
+</details>

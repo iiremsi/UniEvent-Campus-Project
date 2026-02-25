@@ -1,0 +1,15 @@
+# ═══════════════════════════════════════════════════════════════
+#  UniEvent Kubernetes — Namespace
+# ═══════════════════════════════════════════════════════════════
+#  Neden ayrı namespace?
+#  → Projenin tüm kaynakları tek bir namespace altında toplanır.
+#    Diğer projelerle kaynak çakışması önlenir.
+#    "kubectl get all -n unievent" ile sadece bu projenin kaynaklarını görürüz.
+# ═══════════════════════════════════════════════════════════════
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: unievent
+  labels:
+    app: unievent

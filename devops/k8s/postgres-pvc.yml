@@ -1,0 +1,24 @@
+# ═══════════════════════════════════════════════════════════════
+#  UniEvent Kubernetes — PersistentVolumeClaim (PostgreSQL)
+# ═══════════════════════════════════════════════════════════════
+#  PVC neden gerekli?
+#  → Pod'lar ephemeral'dır (geçici). Pod yeniden başladığında
+#    container içindeki tüm veri kaybolur.
+#    PVC ile PostgreSQL verileri kalıcı diske yazılır.
+#    Pod restart/reschedule durumunda veri korunur.
+# ═══════════════════════════════════════════════════════════════
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: postgres-pvc
+  namespace: unievent
+  labels:
+    app: unievent
+    component: database
+spec:
+  accessModes:
+    - ReadWriteOnce       # Tek bir node tarafından okunur/yazılır
+  resources:
+    requests:
+      storage: 1Gi        # 1 GB — proje kapsamı için yeterli

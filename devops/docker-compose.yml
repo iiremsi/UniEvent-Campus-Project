@@ -1,0 +1,65 @@
+# ═══════════════════════════════════════════════════════════════
+#  UniEvent — Docker Compose (Geliştirme Ortamı)
+# ═══════════════════════════════════════════════════════════════
+#
+#  Kullanım (devops/ klasöründen çalıştır):
+#    docker-compose up -d          → Arka planda başlat
+#    docker-compose logs -f app    → Uygulama loglarını izle
+#    docker-compose down           → Durdur
+#    docker-compose down -v        → Durdur + volume'ları sil (veri kaybolur!)
+#
+#  Bu dosya LOCAL geliştirme içindir.
+#  Production'da Kubernetes kullanılacak (k8s/ klasörüne bak).
+# ═══════════════════════════════════════════════════════════════
+
+version: '3.8'
+
+services:
+  # ── PostgreSQL Veritabanı ──────────────────────────────────
+  postgres:
+    image: postgres:16-alpine
+    container_name: unievent-db
+    environment:
+      POSTGRES_DB: unievent_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - unievent-network
+
+  # ── Spring Boot Uygulaması ─────────────────────────────────
+  app:
+    build:
+      context: ../backend # ← Dockerfile backend/ klasöründe
+      dockerfile: Dockerfile
+    container_name: unievent-backend
+    ports:
+      - "8080:8080"
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: unievent_db
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres
+      JWT_SECRET: UniEventSuperSecretKeyThatIsAtLeast256BitsLongForHS256Algorithm2024
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - unievent-network
+
+volumes:
+  postgres_data:
+    driver: local
+
+networks:
+  unievent-network:
+    driver: bridge

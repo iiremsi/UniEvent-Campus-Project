@@ -1,0 +1,20 @@
+# ═══════════════════════════════════════════════════════════════
+#  UniEvent Kubernetes — ConfigMap
+# ═══════════════════════════════════════════════════════════════
+#  ConfigMap neden kullanıyoruz?
+#  → Hassas OLMAYAN yapılandırma değerlerini (DB host, port, isim)
+#    container image'dan ayırır. Image rebuild etmeden ayar değiştirebiliriz.
+#    12-Factor App metodolojisinin III. maddesi: "Config in the environment"
+# ═══════════════════════════════════════════════════════════════
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: unievent-config
+  namespace: unievent
+  labels:
+    app: unievent
+data:
+  DB_HOST: "postgres-service"
+  DB_PORT: "5432"
+  DB_NAME: "unievent_db"

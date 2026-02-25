@@ -1,0 +1,15 @@
+package com.unievent;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
+
+@SpringBootTest
+class UniEventApplicationTests {
+
+    @Test
+    void contextLoads() {
+        // Spring context'in tüm bean'leri (Entity, Repository) doğru yükleyebildiğini
+        // doğrular.
+    }
+}

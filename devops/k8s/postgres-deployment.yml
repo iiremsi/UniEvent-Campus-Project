@@ -1,0 +1,84 @@
+# ═══════════════════════════════════════════════════════════════
+#  UniEvent Kubernetes — PostgreSQL Deployment + Service
+# ═══════════════════════════════════════════════════════════════
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres
+  namespace: unievent
+  labels:
+    app: unievent
+    component: database
+spec:
+  replicas: 1               # Veritabanı tek replica — veri tutarlılığı için
+  selector:
+    matchLabels:
+      app: unievent
+      component: database
+  template:
+    metadata:
+      labels:
+        app: unievent
+        component: database
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:16-alpine
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_DB
+              valueFrom:
+                configMapKeyRef:
+                  name: unievent-config
+                  key: DB_NAME
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: unievent-secret
+                  key: DB_USERNAME
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: unievent-secret
+                  key: DB_PASSWORD
+          # PVC mount — veri kalıcılığı
+          volumeMounts:
+            - name: postgres-storage
+              mountPath: /var/lib/postgresql/data
+          # Kaynak limitleri — pod'un fazla kaynak tüketmesini engeller
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+      volumes:
+        - name: postgres-storage
+          persistentVolumeClaim:
+            claimName: postgres-pvc
+
+---
+# ── PostgreSQL Service ───────────────────────────────────────
+#  ClusterIP (varsayılan): Sadece cluster içinden erişilebilir.
+#  Backend uygulaması "postgres-service:5432" adresiyle bağlanır.
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-service
+  namespace: unievent
+  labels:
+    app: unievent
+    component: database
+spec:
+  type: ClusterIP
+  selector:
+    app: unievent
+    component: database
+  ports:
+    - port: 5432
+      targetPort: 5432
+      protocol: TCP
