@@ -38,6 +38,16 @@ docker-compose up -d
 
 ---
 
+## Risk Analysis
+You can find the detailed risk analysis of the project here:
+docs/risk-analysis.md
+
+## Validation and Testing Plan
+Detailed testing and validation strategy is explained here:
+docs/testing-plan.md
+
+---
+
 ## 📄 Documentation
 
 | Document | Description |
@@ -45,6 +55,8 @@ docker-compose up -d
 | [API Spec](docs/api-spec.md) | Endpoints, request/response examples |
 | [ER Diagram](docs/er-diagram.md) | Database schema & design decisions |
 | [Architecture](docs/architecture.md) | System design, K8s topology, rationale |
+| [Risk Analysis](docs/risk-analysis.md) | Technical, Project, User-Realated Risks and Strategies |
+| [Validation & Testing  Plan](docs/testing-plan.md) | Unit, Integration, System, User Testing |
 
 ---
 
