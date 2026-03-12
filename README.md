@@ -40,11 +40,11 @@ docker-compose up -d
 
 ## Risk Analysis
 You can find the detailed risk analysis of the project here:
-docs/risk-analysis.md
+[Risk Analysis](docs/risk-analysis.md)
 
 ## Validation and Testing Plan
 Detailed testing and validation strategy is explained here:
-docs/testing-plan.md
+[Validation & Testing  Plan](docs/testing-plan.md)
 
 ---
 
