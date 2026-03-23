@@ -83,7 +83,7 @@ Detailed testing and validation strategy is explained here:
 ## 📊 Project Management
 
 - **Methodology:** Agile (Scrum)
-- **Tracking:** [Jira Board](https://www.atlassian.com/software/jira)
+- **Tracking:** [Jira Board](https://uni-event.atlassian.net/jira/software/projects/SCRUM/boards/1)
 - **Project Plan:** [UniEvent-Project-Plan.xlsx](https://github.com/user-attachments/files/25415136/UniEvent-Project-Plan.xlsx)
 
 ![UML Diagram](https://github.com/user-attachments/assets/8be46d71-e730-42b8-8723-de90fbf6755a)
