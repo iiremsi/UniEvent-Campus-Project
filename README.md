@@ -56,6 +56,10 @@ You can find the detailed risk analysis of the project here:
 Detailed testing and validation strategy is explained here:
 [Validation & Testing  Plan](docs/testing-plan.md)
 
+## Live Demo Planning
+Brief overview of the live demo that will be shown here:
+[Demo-Plan](docs/demo-plan.md)
+
 ---
 
 ## 📄 Documentation
