@@ -38,6 +38,16 @@ docker-compose up -d
 
 ---
 
+## CI/CD Pipeline
+
+The project uses CI/CD practices:
+
+- Automated build using GitHub Actions
+- Docker containerization
+- Continuous deployment setup
+
+Configuration files are located in the `devops` folder.
+
 ## Risk Analysis
 You can find the detailed risk analysis of the project here:
 [Risk Analysis](docs/risk-analysis.md)
