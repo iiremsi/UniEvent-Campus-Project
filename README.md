@@ -27,6 +27,10 @@ docker-compose up -d
 
 ---
 
+## 🎥 Project Demo
+
+- **Watch the Demo:** [UniEvent Demo - YouTube](https://www.youtube.com/watch?v=0tKiM3mW6D8)
+
 ## 🗂️ Project Structure
 
 ```
