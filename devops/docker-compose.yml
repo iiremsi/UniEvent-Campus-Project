@@ -24,7 +24,7 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
     ports:
-      - "5432:5432"
+      - "5433:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
@@ -53,6 +53,19 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
+    networks:
+      - unievent-network
+
+  # ── Vite Frontend ──────────────────────────────────────────
+  frontend:
+    build:
+      context: ../frontend
+      dockerfile: Dockerfile
+    container_name: unievent-frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - app
     networks:
       - unievent-network
 
